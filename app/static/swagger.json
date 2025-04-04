@@ -1,0 +1,240 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Adquisiciones API",
+        "description": "API para gestionar adquisiciones con autenticación JWT."
+    },
+    "basePath": "/api",
+    "schemes": ["http","https"],
+    "paths": {
+        "/autenticar": {
+            "post": {
+                "summary": "Autenticar usuario",
+                "description": "Autentica un usuario y devuelve un token JWT.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["username", "password"]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Autenticación exitosa",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales inválidas"
+                    }
+                }
+            }
+        },
+        "/adquisiciones": {
+            "post": {
+                "summary": "Crear una adquisición",
+                "description": "Crea una nueva adquisición. Requiere autenticación JWT.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Adquisicion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Adquisición creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Datos inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            },
+            "get": {
+                "summary": "Obtener todas las adquisiciones",
+                "description": "Devuelve una lista de todas las adquisiciones. Requiere autenticación JWT.",
+                "responses": {
+                    "200": {
+                        "description": "Lista de adquisiciones",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Adquisicion"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            }
+        },
+        "/adquisiciones/{id}": {
+            "get": {
+                "summary": "Obtener una adquisición por ID",
+                "description": "Devuelve una adquisición específica por su ID. Requiere autenticación JWT.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Adquisición encontrada",
+                        "schema": {
+                            "$ref": "#/definitions/Adquisicion"
+                        }
+                    },
+                    "404": {
+                        "description": "Adquisición no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            },
+            "put": {
+                "summary": "Actualizar una adquisición",
+                "description": "Actualiza una adquisición específica por su ID. Requiere autenticación JWT.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Adquisicion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Adquisición actualizada exitosamente"
+                    },
+                    "404": {
+                        "description": "Adquisición no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Eliminar una adquisición",
+                "description": "Elimina una adquisición específica por su ID. Requiere autenticación JWT.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Adquisición eliminada exitosamente"
+                    },
+                    "404": {
+                        "description": "Adquisición no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Adquisicion": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "presupuesto": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "unidad_administrativa": {
+                    "type": "string"
+                },
+                "tipo_bien": {
+                    "type": "string"                
+                },
+                "cantidad": {
+                    "type": "integer"
+                },
+                "valor_total": {
+                    "type": "number",
+                    "format": "float"
+                },
+                "fecha_liquidacion": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "proveedor": {
+                    "type": "string"
+                },
+                "documentacion": {
+                    "type": "string"
+                },
+                "activo": {
+                    "type": "boolean"
+                }
+            },
+            "required": ["presupuesto", "unidad_adminsitrativa", "tipo_bien", "cantidad", "valor_total", "fecha_liquidacion", "proveedor", "documentacion"]
+        }
+    },
+    "securityDefinitions": {
+        "jwt": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token JWT para autenticación. Prefijo 'Bearer ' debe ser incluido."
+        }
+    }
+}

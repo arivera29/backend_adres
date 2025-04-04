@@ -2,7 +2,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
-
+from .routes.route import route
 from .config import Config
 from .database import db
 
@@ -22,7 +22,7 @@ def create_app():
     
      
     # Register Blueprints
-
+    app.register_blueprint(route, url_prefix='/api')
     
 
     # Swagger setup

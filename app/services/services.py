@@ -1,7 +1,11 @@
-from database import db
+from ..database import db
 from ..models.model import Adquisiciones
+from ..config import Config
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError, DataError
+import jwt
+from datetime import datetime, timedelta
+from flask_jwt_extended import create_access_token
 
 class AdquisicionesService:
     """
@@ -170,11 +174,33 @@ class AdquisicionesService:
                 return {"error": True, "message": f"Adqicisión no encontrado con el ID {id}"}, 404
             self.db_session.delete(adquisicion)
             self.db_session.commit()
-            return {"message": "Adquisición eliminada correctamente"}, 200
+            return {"error": False, "message": "Adquisición eliminada correctamente"}, 200
         except IntegrityError as e:
             self.db_session.rollback()
             return {"error": True, "message": f"IntegrityError: {str(e)}"}, 409
         except Exception as e:
             self.db_session.rollback()
+            return {"error": True, "message": f"Exception: {str(e)}"}, 400
+        
+    def autenticar(self, username, password):
+        """
+        Autentica un usuario y genera un token JWT.
+        """
+        try:
+            # Aquí deberías implementar la lógica de autenticación
+            # Por ejemplo, verificar el nombre de usuario y la contraseña en la base de datos
+            if username == "admin" and password == "admin":
+
+                # Generar el token
+                additional_claims = {"username": username}
+                
+                access_token = create_access_token(
+                    identity=username, additional_claims=additional_claims
+                )
+
+                return {"error": False, "message": "Autenticación exitosa", "token": access_token}, 200
+            else:
+                return {"error": True, "message": "Credenciales inválidas"}, 401
+        except Exception as e:
             return {"error": True, "message": f"Exception: {str(e)}"}, 400
         
