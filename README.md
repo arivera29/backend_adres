@@ -1,11 +1,8 @@
-```markdown
 # Prueba de conicimientos ADRES
 
 Este es el codigo de la prueba de conocimientos de desarrollo de la ADRES
 
 ## Instalación
-
-Primero de debes instalar Python en tu equipo local y despues instalar las librerias
 
 
 ### Requisitos previos
@@ -67,4 +64,3 @@ pytest
     ```
 4. La aplicación estará disponible en `http://localhost:5000` o en el puerto configurado en el contenedor.
 
-```
