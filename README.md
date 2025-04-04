@@ -52,7 +52,7 @@ Para ejecutar las pruebas, utiliza el siguiente comando:
 ```bash
 pytest
 ```
-```
+
 
 ### Ejecución de la aplicación en un contenedor
 
@@ -66,3 +66,5 @@ pytest
     docker run -p 5000:5000 nombre-de-la-imagen
     ```
 4. La aplicación estará disponible en `http://localhost:5000` o en el puerto configurado en el contenedor.
+
+```
