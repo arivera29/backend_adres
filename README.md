@@ -1,3 +1,4 @@
+```markdown
 # Prueba de conicimientos ADRES
 
 Este es el codigo de la prueba de conocimientos de desarrollo de la ADRES
@@ -6,7 +7,7 @@ Este es el codigo de la prueba de conocimientos de desarrollo de la ADRES
 
 Primero de debes instalar Python en tu equipo local y despues instalar las librerias
 
-```markdown
+
 ### Requisitos previos
 
 1. **Instalar Python**: Descarga e instala la última versión de Python desde [python.org](https://www.python.org/).
