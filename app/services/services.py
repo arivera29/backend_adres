@@ -68,18 +68,13 @@ class AdquisicionesService:
                 except ValueError:
                     raise ValueError("Formato de fecha invalido, debe ser YYYY-MM-DD")
             
-            if 'activo' in data:
-                data['activo'] = bool(data['activo'])
-            else:
-                data['activo'] = True
-
             new_adquisicion = Adquisiciones(
                 presupuesto=presupuesto,
                 unidad_administrativa=data['unidad_administrativa'],
                 tipo_bien=data['tipo_bien'],
                 cantidad=cantidad,
                 valor_total=valor_total,
-                fecha_adquisicion=data.get('fecha_adquisicion'),
+                fecha_adquisicion=data['fecha_adquisicion'],
                 proveedor=data['proveedor'],
                 documentacion=data['documentacion'],
                 activo=data['activo']
@@ -106,7 +101,7 @@ class AdquisicionesService:
         Obtiene todas las adquisiciones de la base de datos.
         """
         try:
-            adquisiciones = Adquisiciones.query.all()
+            adquisiciones = Adquisiciones.query.order_by(Adquisiciones.id.desc()).all()
             return [adquisicion.to_dict() for adquisicion in adquisiciones],200
         except IntegrityError as e:
             return {"error": True, "message": f"IntegrityError: {str(e)}"}, 409

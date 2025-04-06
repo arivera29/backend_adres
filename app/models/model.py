@@ -27,7 +27,5 @@ class Adquisiciones(db.Model):
             'fecha_adquisicion': self.fecha_adquisicion.isoformat() if self.fecha_adquisicion else None,
             'proveedor': self.proveedor,
             'documentacion': self.documentacion,
-            'fecha_creacion': self.fecha_creacion.isoformat() if self.fecha_creacion else None,
-            'fecha_modificacion': self.fecha_modificacion.isoformat() if self.fecha_modificacion else None,
             'activo': self.activo
         }

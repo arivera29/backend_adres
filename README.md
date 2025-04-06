@@ -1,4 +1,4 @@
-# Prueba de conicimientos ADRES
+# Prueba de conocimientos para ADRES
 
 Este es el codigo de la prueba de conocimientos de desarrollo de la ADRES
 

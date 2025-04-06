@@ -28,7 +28,9 @@ def create_adquisicion():
     Devuelve el objeto creado y un código de estado.
     """
     data = request.get_json()
+    print(data)
     result, status = adquisiciones_service.create_adquisicion(data)
+    print(result)
     return jsonify(result), status
 
 @route.route('/adquisiciones', methods=['GET'])
@@ -62,8 +64,10 @@ def update_adquisicion(id):
     Recibe un JSON con los nuevos datos de la adquisicion.
     Devuelve el objeto actualizado y un código de estado.
     """
-    data = request.get_json()
+    data = request.get_json() 
+    print(data)
     result, status = adquisiciones_service.update_adquisicion(id, data)
+    print(result)
     return jsonify(result), status
 
 @route.route('/adquisiciones/<int:id>', methods=['DELETE'])
